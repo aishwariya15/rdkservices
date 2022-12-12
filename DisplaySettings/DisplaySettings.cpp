@@ -51,6 +51,7 @@
 #include "UtilsString.h"
 #include "UtilsisValidInt.h"
 #include "dsRpc.h"
+#include <math.h>
 
 using namespace std;
 
@@ -80,6 +81,33 @@ using namespace std;
 #define API_VERSION_NUMBER_MAJOR 1
 #define API_VERSION_NUMBER_MINOR 1
 #define API_VERSION_NUMBER_PATCH 12
+
+#define PLUGIN_PROFILE_START() \
+    struct timespec start; \
+    struct timespec stop; \
+    clock_gettime(CLOCK_MONOTONIC, &start);\
+	LOGINFO("%s: Entry\n",__FUNCTION__);
+
+#define PLUGIN_PROFILE_END() \
+    clock_gettime(CLOCK_MONOTONIC, &stop); \
+    LOGINFO("%s : Exit Time: %ldms\n", __FUNCTION__, getElapsedTimeMs(&start, &stop));
+
+long getElapsedTimeMs(struct timespec *start, struct timespec *stop)
+{
+    struct timespec elapsed = {};
+    if ((stop->tv_nsec - start->tv_nsec) < 0)
+    {
+        elapsed.tv_sec = stop->tv_sec - start->tv_sec - 1;
+        elapsed.tv_nsec = stop->tv_nsec - start->tv_nsec + 1000000000;
+    }
+    else
+    {
+        elapsed.tv_sec = stop->tv_sec - start->tv_sec;
+        elapsed.tv_nsec = stop->tv_nsec - start->tv_nsec;
+    }
+    return (elapsed.tv_sec*1000 + lround(elapsed.tv_nsec/1e6));
+}
+
 
 static bool isCecArcRoutingThreadEnabled = false;
 static bool isCecEnabled = false;
@@ -365,6 +393,7 @@ namespace WPEFramework {
         {   //sample servicemanager response: {"success":true,"supportedAudioPorts":["HDMI0"]}
             //LOGINFOMETHOD();
             LOGINFO("Entering DisplaySettings::InitAudioPorts");
+	    PLUGIN_PROFILE_START();
             uint32_t ret = Core::ERROR_NONE;
             try
             {
@@ -539,6 +568,8 @@ namespace WPEFramework {
                 LOGWARN("Audio Port : InitAudioPorts failed\n");
                 LOG_DEVICE_EXCEPTION0();
             }
+	    PLUGIN_PROFILE_END();
+	    LOGINFO("%s: log exit \n",__FUNCTION__);
         }
 
         const string DisplaySettings::Initialize(PluginHost::IShell* service)
