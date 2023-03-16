@@ -772,6 +772,7 @@ namespace WPEFramework
 
             if (IARM_BUS_DSMGR_EVENT_HDMI_IN_AV_LATENCY == eventId)
             {
+		    LOGINFO("received the latency mode change event in dsHdmiAVLatencyEventHandler\n");
                 IARM_Bus_DSMgr_EventData_t *eventData = (IARM_Bus_DSMgr_EventData_t *)data;
                 int audio_output_delay = eventData->data.hdmi_in_av_latency.audio_output_delay;
                 int video_latency= eventData->data.hdmi_in_av_latency.video_latency;
