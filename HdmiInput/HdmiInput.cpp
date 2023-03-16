@@ -781,7 +781,7 @@ namespace WPEFramework
             }
         }
  
-void HdmiInput::hdmiInAVLatencyChange(dsAudioVideoLatency *param)
+        void HdmiInput::hdmiInAVLatencyChange(int audio_output_delay,int video_latency)
         {
 
 
@@ -797,22 +797,19 @@ void HdmiInput::hdmiInAVLatencyChange(dsAudioVideoLatency *param)
                     JsonObject hdmiCecSinkResult;
                     JsonObject param;
 
-					param["audio_output_delay"] = param->audio_output_delay;
-					param["video_latency"] = param->video_latency;
+                                        param["audio_output_delay"] = audio_output_delay;
+                                        param["video_latency"] = video_latency;
                     m_client->Invoke<JsonObject, JsonObject>(2000, "Report_AudioVideoLatency", param, hdmiCecSinkResult);
                     if (!hdmiCecSinkResult["success"].Boolean()) {
-			success = false;
                         LOGERR("HdmiCecSink Plugin returned error\n");
                     }
                 }
             }
-	    else {
-		success = false;
+            else {
                 LOGERR("HdmiCecSink plugin not ready\n");
             }
 
-            return success;
-	}
+        }
 
         void  HdmiInput::tvLowLatencyModeEventHandler(const char *owner, IARM_EventId_t eventId, void *data, size_t len)
         {
