@@ -23,6 +23,7 @@
 
 #include "Module.h"
 #include "dsTypes.h"
+#include "rdk/tv-hal/tvTypes.h"
 
 namespace WPEFramework {
 
@@ -64,7 +65,10 @@ namespace WPEFramework {
             uint32_t setVideoRectangleWrapper(const JsonObject& parameters, JsonObject& response);
             uint32_t getSupportedGameFeatures(const JsonObject& parameters, JsonObject& response);
             uint32_t getHdmiGameFeatureStatusWrapper(const JsonObject& parameters, JsonObject& response);
-            //End methods
+            uint32_t getAVLatency(const JsonObject& parameters, JsonObject& response);
+            uint32_t getTVLowLatencyMode(const JsonObject& parameters, JsonObject& response);
+
+	    //End methods
 
             JsonArray getHDMIInputDevices();
             void writeEDID(int deviceId, std::string message);
@@ -74,6 +78,13 @@ namespace WPEFramework {
             int setEdidVersion(int iPort, int iEdidVer);
             int getEdidVersion(int iPort);
             bool getHdmiALLMStatus(int iPort);
+	    void getHdmiCecSinkPlugin();
+	    void getControlSettingsPlugin();
+	    PluginHost::IShell* m_service = nullptr;
+	    WPEFramework::JSONRPC::LinkType<WPEFramework::Core::JSON::IElement>* m_client;
+	    WPEFramework::JSONRPC::LinkType<WPEFramework::Core::JSON::IElement>* m_tv_client;
+	    std::vector<std::string> m_clientRegisteredEventNames;
+	     uint32_t getServiceState(PluginHost::IShell* shell, const string& callsign, PluginHost::IShell::state& state);
 
             bool setVideoRectangle(int x, int y, int width, int height);
 
@@ -91,7 +102,11 @@ namespace WPEFramework {
 
             void hdmiInputALLMChange( int port , bool allmMode);
             static void dsHdmiGameFeatureStatusEventHandler(const char *owner, IARM_EventId_t eventId, void *data, size_t len);
-
+	    void hdmiInAVLatencyChange(int audio_output_delay,int video_latency);
+	    static void dsHdmiAVLatencyEventHandler(const char *owner, IARM_EventId_t eventId, void *data, size_t len);
+	    
+	    void tvLowLatencyChange(bool lowLatencyMode);
+	    static void tvLowLatencyModeEventHandler(const char *owner, IARM_EventId_t eventId, void *data, size_t len);
         public:
             HdmiInput();
             virtual ~HdmiInput();
