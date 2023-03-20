@@ -899,7 +899,7 @@ namespace WPEFramework
    	{
             PluginHost::IShell::state state;
             LOGINFOMETHOD();
-            if ((getServiceState(m_service, TVSETTINGS_CALLSIGN, state) == Core::ERROR_NONE) && (state == PluginHost::IShell::state::ACTIV))
+            if ((getServiceState(m_service, TVSETTINGS_CALLSIGN, state) == Core::ERROR_NONE) && (state == PluginHost::IShell::state::ACTIVATED))
 			{
                 LOGINFO("%s is active", TVSETTINGS_CALLSIGN);
 	
