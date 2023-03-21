@@ -472,6 +472,32 @@
                 ]                
             }
         },
+	"getAVLatency":{
+            "summary": "Returns the AV latency values",
+            "result": {
+                "type": "object",
+                "properties": {
+                    "AudioLatency": {
+                        "summary": "Audio Latency",
+                        "type": "integer",
+                        "example": "120"
+                    },
+                    "VideoLatency": {
+                        "summary": "Video Latency",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "success": {
+                        "$ref": "#/definitions/success"
+                    }
+                },
+                "required": [
+                    "AudioLatency",
+					"VideoLatency",
+                    "success"
+                ]
+            }
+        },
         "videoStreamInfoUpdate": {
             "deprecated" : true,
             "referenceUrl" : "https://rdkcentral.github.io/rdkservices/#/api/AVInputPlugin?id=videostreaminfoupdate",
