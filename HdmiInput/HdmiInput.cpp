@@ -163,7 +163,7 @@ namespace WPEFramework
 		IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_STATUS, dsHdmiStatusEventHandler) );
 		IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_VIDEO_MODE_UPDATE, dsHdmiVideoModeEventHandler) );
 		IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_ALLM_STATUS, dsHdmiGameFeatureStatusEventHandler) );
-       		IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_AV_LATENCY, dsHdmiAVLatencyEventHandler) );
+//		IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_AV_LATENCY, dsHdmiAVLatencyEventHandler) );
 		//IARM_CHECK( IARM_Bus_RegisterEventHandler(IARM_BUS_TVMGR_NAME,IARM_BUS_TVMGR_EVENT_TV_LOW_LATENCY_MODE, tvLowLatencyModeEventHandler) );
 
 	    }
@@ -179,7 +179,7 @@ namespace WPEFramework
 		IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_STATUS) );
 		IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_VIDEO_MODE_UPDATE) );
 		IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_ALLM_STATUS) );
-           	IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_AV_LATENCY) );
+         //  	IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_DSMGR_NAME,IARM_BUS_DSMGR_EVENT_HDMI_IN_AV_LATENCY) );
 	//	IARM_CHECK( IARM_Bus_UnRegisterEventHandler(IARM_BUS_TVMGR_NAME,IARM_BUS_TVMGR_EVENT_TV_LOW_LATENCY_MODE) );
 
 
@@ -737,6 +737,7 @@ namespace WPEFramework
                 returnResponse(true);
             }
         }
+#if 0
 	void HdmiInput::tvLowLatencyChange(bool low_latency)
 	{
 
@@ -811,7 +812,7 @@ namespace WPEFramework
             }
 
         }
-#if 0
+
         void  HdmiInput::tvLowLatencyModeEventHandler(const char *owner, IARM_EventId_t eventId, void *data, size_t len)
         {
             LOGINFO("Entered in tvLowLatencyModeEventHandler\n");
